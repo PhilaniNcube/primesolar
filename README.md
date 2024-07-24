@@ -1,29 +1,39 @@
-# Create T3 App
+# Primesolar
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+# Description
+An application which will be a site to show useful information on solar energy for home and business solar. It will also include information on diffrent configurations of solar systems, including estimated upfront costs and repayment periods
 
-## What's next? How do I make an app with this?
+## TODO
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- [*] Set up database (Supabase or Vercel Postgress)
+- [] Set up CMS (Basehub or Payload CMS)
+- [] Set up clerk (Only if not using supabase since they have authentication built in)
+- [*] Install Shadcn
+- [] Set up Resend for sending emails
+- [] Obtain information on solar products to be included in the database
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
 
-## Learn More
+## FEATURES
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+  ### Product Catalog:
+    -> Detailed product listings (panels, inverters, batteries, etc.) with specifications, images, pricing, and warranty information.
+    -> Filtering and sorting options (by brand, wattage, price, etc.).
+    -> Side-by-side product comparison tool.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+  ### Solar Estimate Tool
+    -> Address Input Field (Google Autocomplete)
+    -> For covered areas integration with the Google Solar API
+    -> Clear and intuitive visualization of solar estimates (charts, graphs, maps).
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+  ### Lead Generation
+    -> Forms to capture user information (with consent) for connecting with solar installers.
 
-## How do I deploy this?
+  ### Educational Content
+    -> Blog/resource section with articles, videos, or infographics about solar energy.
+    -> FAQs about solar technology installations.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+  ### Installer Directory
+    -> Allow installers to apply to e included in a directory
+
+
