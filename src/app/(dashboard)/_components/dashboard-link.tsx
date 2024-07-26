@@ -10,6 +10,8 @@ const DashboardLink = ({href, children}:{href:string, children:ReactNode}) => {
   const router = useRouter();
   const pathname = usePathname();
 
+  console.log({searchParams, router, pathname});
+
   // get the active link
   const isActive = href !== '/dashboard' && pathname.startsWith(href);
 
