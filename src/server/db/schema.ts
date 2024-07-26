@@ -1,14 +1,14 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql } from "drizzle-orm";
+
 import {
-  index,
+
   jsonb,
   numeric,
   pgEnum,
   pgTableCreator,
-  serial,
+
   timestamp,
   uuid,
   varchar,
@@ -20,24 +20,7 @@ import {
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = pgTableCreator((name) => `primesolar_${name}`);
-
-export const posts = createTable(
-  "post",
-  {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
-    ),
-  },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  })
-);
+export const createTable = pgTableCreator((name) => `${name}`);
 
 export const solar_panels = createTable(
   "solar_panel",
@@ -90,3 +73,11 @@ export const batteries = createTable("battery", {
 	price: numeric("price", { precision: 10, scale: 2 }).notNull(),
 	specs: jsonb("specs"),
 });
+
+
+export const profiles = createTable('profiles', {
+  id: uuid('id').primaryKey().notNull(),
+  updated_at: timestamp('updated_at', { withTimezone: true }).$onUpdate(() => new Date()),
+  first_name: varchar('first_name', { length: 256 }).notNull(),
+  last_name: varchar('last_name', { length: 256 }).notNull(),
+})
