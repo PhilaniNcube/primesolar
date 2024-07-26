@@ -5,9 +5,41 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "@/utils/validation/auth";
+import type { z } from "zod";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
+import { useFormState } from "react-dom";
+import { loginAction } from "@/actions/auth-actions";
+import { useTransition } from "react";
+import { toast } from "sonner";
+
+const initialState = {
+	errors: {
+		email: [],
+		password: [],
+	},
+	user: undefined,
+};
 
 export function Login() {
+	const [state, formAction] = useFormState(loginAction, initialState);
+	const [pending, startTransition] = useTransition();
+
+	const form = useForm<z.infer<typeof loginSchema>>({
+		resolver: zodResolver(loginSchema),
+		mode: "onBlur",
+		reValidateMode: "onSubmit",
+	});
+
 	return (
 		<div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[calc(100vh-56px)] bg-slate-700">
 			<div className="flex items-center justify-center py-12">
@@ -18,34 +50,64 @@ export function Login() {
 							Enter your email below to login to your account
 						</p>
 					</div>
-					<form className="grid gap-4">
-						<div className="grid gap-2">
-							<Label htmlFor="email" className="text-white">Email</Label>
-							<Input
-								id="email"
-								type="email"
-                name="email"
-								placeholder="m@example.com"
-								required
-							/>
-						</div>
-						<div className="grid gap-2">
-							<div className="flex items-center">
-								<Label htmlFor="password" className="text-white">Password</Label>
-								<Link
-									href="/forgot-password"
-									className="ml-auto text-slate-400 inline-block text-sm underline"
-								>
-									Forgot your password?
-								</Link>
+					<Form {...form}>
+						<form
+							className="grid gap-4"
+							action={(formData: FormData) => {
+								startTransition(() => {
+									formAction(formData);
+									toast("Logging in...");
+								});
+							}}
+						>
+							<div className="grid gap-2">
+								<FormField
+									control={form.control}
+									name="email"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Email</FormLabel>
+											<FormControl>
+												<Input placeholder="" {...field} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
 							</div>
-							<Input id="password" type="password" name="password" required />
-						</div>
-						<Button type="submit" className="w-full bg-green-700 text-white">
-							Login
-						</Button>
-
-					</form>
+							<div className="grid gap-2">
+								<div className="flex items-center">
+									<Link
+										href="/forgot-password"
+										className="ml-auto text-slate-400 inline-block text-sm underline"
+									>
+										Forgot your password?
+									</Link>
+								</div>
+								<FormField
+									control={form.control}
+									name="password"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Password</FormLabel>
+											<FormControl>
+												<Input type="password" placeholder="" {...field} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
+							<Button
+								aria-disabled={pending}
+                disabled={pending}
+								type="submit"
+								className="w-full bg-green-700 text-white"
+							>
+								{pending ? "Please wait..." : "Login"}
+							</Button>
+						</form>
+					</Form>
 					<div className="mt-4 text-center text-sm text-white">
 						Don&apos;t have an account?{" "}
 						<Link href="/sign-up" className="underline">

@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { signUpSchema } from "@/utils/validation/auth";
+import { loginSchema, signUpSchema } from "@/utils/validation/auth";
 
 export async function signUpAction(prev:unknown, formdata:FormData) {
 
@@ -45,7 +45,41 @@ export async function signUpAction(prev:unknown, formdata:FormData) {
     user: data.user
   }
 
+}
 
 
+export async function loginAction(prev:unknown, formdata:FormData) {
+
+  const supabase = createClient();
+
+  const validatedFields = loginSchema.safeParse({
+    email: formdata.get('email'),
+    password: formdata.get('password'),
+  })
+
+
+  if (!validatedFields.success) {
+     return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    }
+  }
+
+  // login the user
+  const {data, error} = await supabase.auth.signInWithPassword({
+    email: validatedFields.data.email,
+    password: validatedFields.data.password,
+  })
+
+  if(error) {
+    return {
+      errors: {
+        cause: [error.message]
+      }
+    }
+  }
+
+  return {
+    user: data.user
+  }
 
 }
