@@ -2,6 +2,8 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { loginSchema, signUpSchema } from "@/utils/validation/auth";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function signUpAction(prev:unknown, formdata:FormData) {
 
@@ -82,4 +84,13 @@ export async function loginAction(prev:unknown, formdata:FormData) {
     user: data.user
   }
 
+}
+
+
+export const logoutAction = async () => {
+  const supabase = createClient();
+
+  await supabase.auth.signOut();
+ revalidatePath("/", "layout");
+  redirect('/');
 }

@@ -1,9 +1,16 @@
+import { logoutAction } from "@/actions/auth-actions";
 import { Button } from "@/components/ui/button";
+import { currentUser } from "@/utils/queries/users";
 import { SunIcon } from "lucide-react";
 import Link from "next/link";
 
 
-const DesktopNavigation = () => {
+const DesktopNavigation = async () => {
+
+  const user = await currentUser();
+  console.log(user);
+
+
   return (
 			<header className="hidden md:flex items-center w-full py-2">
 				<div className="container px-6 lg:px-0 flex items-center justify-between">
@@ -27,12 +34,28 @@ const DesktopNavigation = () => {
 						<Link href="/systems" className="font-semibold">
 							Complete Systems
 						</Link>
-						<Link href="/login" className="font-semibold">
-							<Button variant="outline">Login</Button>
-						</Link>
-						<Link href="/sign-up" className="font-semibold">
-							<Button variant="secondary">Sign Up</Button>
-						</Link>
+						{user === null ? (
+							<>
+								<Link href="/login" className="font-semibold">
+									<Button variant="outline" size="sm">
+										Login
+									</Button>
+								</Link>
+								<Link href="/sign-up" className="font-semibold">
+									<Button variant="secondary" size="sm">
+										Sign Up
+									</Button>
+								</Link>
+							</>
+						) : (
+							<>
+								<form action={logoutAction}>
+									<Button variant="destructive" size="sm">
+										Logout
+									</Button>
+								</form>
+							</>
+						)}
 					</nav>
 				</div>
 			</header>
