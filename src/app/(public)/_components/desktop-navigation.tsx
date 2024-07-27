@@ -8,8 +8,6 @@ import Link from "next/link";
 const DesktopNavigation = async () => {
 
   const user = await currentUser();
-  console.log(user);
-
 
   return (
 			<header className="hidden md:flex items-center w-full py-2">
