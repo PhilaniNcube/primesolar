@@ -1,16 +1,15 @@
-import { logoutAction } from "@/actions/auth-actions";
-import { Button } from "@/components/ui/button";
-import { currentUser, isAdmin } from "@/utils/queries/users";
+
+import {  isAdmin } from "@/utils/queries/users";
 import { SunIcon } from "lucide-react";
 import Link from "next/link";
 
 
 const DesktopNavigation = async () => {
 
-  const userData =  currentUser();
+
   const adminData = isAdmin();
 
-  const [user, admin] = await Promise.all([userData, adminData]);
+  const [ admin] = await Promise.all([ adminData]);
 
   console.log(admin);
 

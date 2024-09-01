@@ -15,14 +15,11 @@ const config = {
   ],
   "rules": {
     "@typescript-eslint/array-type": "off",
+    "@typescript-eslint/consistent-type-imports": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
-    "@typescript-eslint/consistent-type-imports": [
-      "warn",
-      {
-        "prefer": "type-imports",
-        "fixStyle": "inline-type-imports"
-      }
-    ],
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
