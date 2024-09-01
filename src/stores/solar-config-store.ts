@@ -57,8 +57,7 @@ export const createConfigStore = (
     setDepthOfDischarge: (depth) =>
       set((state) => ({ ...state, depthOfDischarge: depth })),
     setBattery: (battery) => set((state) => ({ ...state, battery: battery })),
-    setInverter: (inverter) =>
-      set((state) => ({ ...state, inverter: inverter })),
+    setInverter: (inverter) => set((state) => ({ ...state, inverter: inverter })),
     setBatteryQuantity: (quantity) => set((state) => ({ ...state, batteryQuantity: quantity })),
     setInverterQuantity: (quantity) => set((state) => ({ ...state, inverterQuantity: quantity })),
   }));
