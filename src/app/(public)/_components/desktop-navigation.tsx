@@ -1,13 +1,19 @@
 import { logoutAction } from "@/actions/auth-actions";
 import { Button } from "@/components/ui/button";
-import { currentUser } from "@/utils/queries/users";
+import { currentUser, isAdmin } from "@/utils/queries/users";
 import { SunIcon } from "lucide-react";
 import Link from "next/link";
 
 
 const DesktopNavigation = async () => {
 
-  const user = await currentUser();
+  const userData =  currentUser();
+  const adminData = isAdmin();
+
+  const [user, admin] = await Promise.all([userData, adminData]);
+
+  console.log(admin);
+
 
   return (
 			<header className="hidden md:flex items-center w-full py-2">
@@ -52,6 +58,13 @@ const DesktopNavigation = async () => {
 										Logout
 									</Button>
 								</form>
+                {admin === true ? (
+                  <Link href="/dashboard" className="font-semibold">
+                    <Button variant="secondary" size="sm" className="flex items-center">
+                      Dashboard
+                    </Button>
+                  </Link>
+                ) : null}
 							</>
 						)}
 					</nav>

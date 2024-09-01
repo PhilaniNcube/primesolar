@@ -8,7 +8,6 @@ import {
   numeric,
   pgEnum,
   pgTableCreator,
-
   timestamp,
   uuid,
   varchar,
@@ -80,4 +79,9 @@ export const profiles = createTable('profiles', {
   updated_at: timestamp('updated_at', { withTimezone: true }).$onUpdate(() => new Date()),
   first_name: varchar('first_name', { length: 256 }).notNull(),
   last_name: varchar('last_name', { length: 256 }).notNull(),
+})
+
+export const admins = createTable('admins', {
+  id: uuid('id').primaryKey().notNull(),
+  profile_id: uuid('profile_id').notNull().references(() => profiles.id),
 })

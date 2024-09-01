@@ -4,7 +4,8 @@ import { Search, SunIcon } from "lucide-react";
 import Link from "next/link";
 import DashboardAccount from "./dashboard-account";
 
-const DashboardHeader = () => {
+const DashboardHeader = async () => {
+
   return <header className="border-b-2 h-[50px]">
     <div className="grid grid-cols-[250px_1fr]">
       <div className="border-r-2 p-2">
