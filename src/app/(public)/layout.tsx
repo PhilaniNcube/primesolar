@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
 	title: "Prime Solar",
 	description:
-		"Get the up to date inormation on solar nergy products, trends and services.",
+		"Get the up to date inormation on solar nergy products, trends and services",
 	icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
