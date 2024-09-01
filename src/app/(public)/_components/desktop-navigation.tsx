@@ -25,7 +25,7 @@ const DesktopNavigation = async () => {
 						<SunIcon className="mr-2" />
 						Prime Solar
 					</Link>
-					<nav className="flex items-center gap-x-6 text-slate-700">
+					{/* <nav className="flex items-center gap-x-6 text-slate-700">
 						<Link href="/batteries" className="font-semibold">
 							Solar Batteries
 						</Link>
@@ -67,7 +67,7 @@ const DesktopNavigation = async () => {
                 ) : null}
 							</>
 						)}
-					</nav>
+					</nav> */}
 				</div>
 			</header>
 		);

@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import DesktopNavigation from "./_components/desktop-navigation";
-import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,7 +12,7 @@ export const metadata: Metadata = {
 
 const PublicLayout = ({ children }: { children: ReactNode }) => {
 	return (
-		<main className={`${GeistSans.variable}`}>
+		<main>
 			<DesktopNavigation />
 			{children}
 		</main>
