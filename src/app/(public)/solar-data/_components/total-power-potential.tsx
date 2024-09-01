@@ -20,6 +20,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { useConfigStore } from "@/providers/solar-config-provider";
 import type { SolarConfig } from "@/types";
 import { Info, Sun } from "lucide-react";
 import { type ChangeEvent, useState } from "react";
@@ -37,7 +38,10 @@ export default function TotalPowerPotential({
 }: SolarPotentialDisplayProps) {
 	const [selectedConfigIndex, setSelectedConfigIndex] = useState(0);
 
-	const [electricityBill, setElectricityBill] = useState(200);
+  const { electricityBill, setElectricityBill } =
+    useConfigStore((store) => store);
+
+
 
 	const averageElectricityPrice = 2.07;
 
