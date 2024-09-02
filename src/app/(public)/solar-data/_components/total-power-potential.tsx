@@ -109,10 +109,10 @@ export default function TotalPowerPotential({
         </div>
         <div>
           <h3 className="text-sm font-medium text-muted-foreground">
-            Minimum Battery Capacity
+            Daily Electricity Usage/Minimum Battery Capacity
           </h3>
           <p className="text-lg font-semibold">
-            {usableBatteryCapacity.toFixed(2)} kWh
+            {usableBatteryCapacity.toFixed(2)} kW
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
