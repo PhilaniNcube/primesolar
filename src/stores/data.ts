@@ -1,3 +1,5 @@
+import { Weight } from "lucide-react";
+
 export const batteries = [
 
   {
@@ -79,7 +81,33 @@ export const inverters = [
   },
 ]
 
+export const solarPanels = [
+  {
+    name: "Canadian Solar 410W High Power Mono PERC HiKU6",
+    watts: 410,
+    dimensions: {
+      length: 172.2,
+      width: 113.4,
+      thickness: 3.0,
+    },
+    weight: 21.3,
+    price: 1883,
+  },
+  {
+    name: "Canadian Solar 605W Super High Power Mono PERC HiKU7",
+    watts: 605,
+    dimensions: {
+      length: 217.2,
+      width: 130.3,
+      thickness: 3.5,
+    },
+    weight: 31,
+    price: 2805,
+  },
+];
 
+
+export type SolarPanel = typeof solarPanels[0]
 export type Inverter = typeof inverters[0]
 
 export type Battery = typeof batteries[0]

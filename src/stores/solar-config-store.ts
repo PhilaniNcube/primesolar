@@ -1,5 +1,5 @@
 import { createStore } from "zustand/vanilla";
-import { batteries, Battery, Inverter, inverters } from "./data";
+import { batteries, Battery, Inverter, inverters, SolarPanel, solarPanels } from "./data";
 
 export type ConfigState = {
   electricityBill: number;
@@ -7,8 +7,10 @@ export type ConfigState = {
   depthOfDischarge: number;
   batteryQuantity: number;
   inverterQuantity: number;
+  solarPanelQuantity: number;
   battery: Battery;
   inverter: Inverter;
+  solarPanel: SolarPanel;
 };
 
 export type ConfigActions = {
@@ -17,8 +19,10 @@ export type ConfigActions = {
   setDepthOfDischarge: (depth: number) => void;
   setBatteryQuantity: (quantity: number) => void;
   setInverterQuantity: (quantity: number) => void;
+  setSolarPanelQuantity: (quantity: number) => void;
   setBattery: (battery: Battery) => void;
   setInverter: (inverter: Inverter) => void;
+  setSolarPanel: (solarPanel: SolarPanel) => void;
 };
 
 export type ConfigStore = ConfigState & ConfigActions;
@@ -30,8 +34,10 @@ export const initConfigStore = (): ConfigState => {
     depthOfDischarge: 0.8,
     batteryQuantity: 1,
     inverterQuantity: 1,
+    solarPanelQuantity: 1,
     battery: batteries[0]!,
     inverter: inverters[0]!,
+    solarPanel: solarPanels[0]!,
   };
 };
 
@@ -41,8 +47,10 @@ export const defaultInitialState: ConfigState = {
   depthOfDischarge: 0.8,
   battery: batteries[0]!,
   inverter: inverters[0]!,
+  solarPanel: solarPanels[0]!,
   batteryQuantity: 1,
   inverterQuantity: 1,
+  solarPanelQuantity: 1,
 };
 
 export const createConfigStore = (
@@ -60,5 +68,8 @@ export const createConfigStore = (
     setInverter: (inverter) => set((state) => ({ ...state, inverter: inverter })),
     setBatteryQuantity: (quantity) => set((state) => ({ ...state, batteryQuantity: quantity })),
     setInverterQuantity: (quantity) => set((state) => ({ ...state, inverterQuantity: quantity })),
+    setSolarPanelQuantity: (quantity) => set((state) => ({ ...state, solarPanelQuantity: quantity })),
+    setSolarPanel: (solarPanel) =>
+      set((state) => ({ ...state, solarPanel: solarPanel })),
   }));
 };

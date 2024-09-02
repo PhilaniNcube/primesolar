@@ -3,6 +3,7 @@ import { GoogleMapsEmbed } from "@next/third-parties/google";
 import TotalPowerPotential from "./total-power-potential";
 import BatteryConfig from "./battery-configuration";
 import InverterConfig from "./inverter-configuration";
+import SolarPanelConfig from "./solar-panel-configuration";
 
 const SolarData = async ({
 	latitude,
@@ -10,6 +11,9 @@ const SolarData = async ({
 	address,
 }: { latitude: number; longitude: number; address: string }) => {
 	const solarData = await getSolarData(latitude, longitude);
+
+  // get the solar panel rating from the solar data api;
+  console.log(solarData.solarPotential.panelCapacityWatts);
 
 
 
@@ -21,6 +25,7 @@ const SolarData = async ({
         <TotalPowerPotential
           address={address}
           solarConfig={solarData.solarPotential.solarPanelConfigs}
+          panelCapacityWatts={solarData.solarPotential.panelCapacityWatts}
           maxPotentialKwh={
             solarData.solarPotential.solarPanelConfigs[
               solarData.solarPotential.solarPanelConfigs.length - 1
@@ -39,6 +44,10 @@ const SolarData = async ({
         />
       </div>
       <div>
+        <SolarPanelConfig
+          solarConfig={solarData.solarPotential.solarPanelConfigs}
+          panelCapacityWatts={solarData.solarPotential.panelCapacityWatts}
+        />
         <BatteryConfig
           solarConfig={solarData.solarPotential.solarPanelConfigs}
         />
