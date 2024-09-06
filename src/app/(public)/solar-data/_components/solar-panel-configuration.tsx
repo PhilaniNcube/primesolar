@@ -20,7 +20,7 @@ const SolarPanelConfig = ({ solarConfig, panelCapacityWatts }: SolarPotentialDis
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Solar Panel Brand & Rating</CardTitle>
         <h3 className="text-lg font-medium text-muted-foreground">
-          Total Inverter Cost:{" "}
+          Total Panel Cost:{" "}
           {formatCurrency(solarPanel.price * solarPanelQuantity)}
         </h3>
       </CardHeader>
