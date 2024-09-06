@@ -30,6 +30,11 @@ interface SolarPotentialDisplayProps {
 	solarConfig: SolarConfig[];
 	maxPotentialKwh: number;
   panelCapacityWatts: number;
+  maxArrayArea: number;
+  roofStats: {
+    areaMeters2: number;
+    groundAreaMeters2: number;
+  }
 }
 
 export default function TotalPowerPotential({
@@ -37,6 +42,8 @@ export default function TotalPowerPotential({
   solarConfig,
   maxPotentialKwh,
   panelCapacityWatts,
+  maxArrayArea,
+  roofStats,
 }: SolarPotentialDisplayProps) {
   const [selectedConfigIndex, setSelectedConfigIndex] = useState(0);
 
@@ -47,6 +54,19 @@ export default function TotalPowerPotential({
     solarPanelQuantity,
     setSolarPanelQuantity,
   } = useConfigStore((store) => store);
+
+  // get the area of a single solar panel
+  const solarPanelArea = ((solarPanel.dimensions.length/100) * (solarPanel.dimensions.width/100));
+
+
+  console.log({solarPanel, solarPanelArea, roofArea: roofStats.areaMeters2});
+
+  // calculate the maximum number of solar panels that can fit on the roof
+  const maxPanels = Math.floor(maxArrayArea / solarPanelArea);
+
+  console.log({panelArea: maxPanels * solarPanelArea, roofStats: roofStats.areaMeters2});
+
+
 
   const selectedConfig = solarConfig[selectedConfigIndex];
   // get the ratio of the solar panel rating and the panelCapacityWatts
@@ -82,6 +102,8 @@ export default function TotalPowerPotential({
     setSolarPanelQuantity(selectedConfig?.panelsCount || 1);
   }, [selectedConfig, setSolarPanelQuantity]);
 
+  console.log({panelsCount: selectedConfig?.panelsCount, maxPanels});
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -94,6 +116,8 @@ export default function TotalPowerPotential({
         <div>
           <h3 className="text-sm font-medium text-muted-foreground">Address</h3>
           <p className="text-lg font-semibold">{address}</p>
+          <p className="text-lg font-semibold">Roof Area: {roofStats.areaMeters2.toFixed(2)}</p>
+          <p className="text-lg font-semibold">Max Solar Array Area: {maxArrayArea.toFixed(2)}</p>
         </div>
         <div>
           <h3 className="text-sm font-medium text-muted-foreground">
@@ -206,13 +230,22 @@ export default function TotalPowerPotential({
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  {solarConfig.map((config: SolarConfig, index: number) => (
-                    <SelectGroup key={config.panelsCount}>
-                      <SelectItem value={index.toString()}>
-                        <SelectLabel>{config.panelsCount} Panels</SelectLabel>
-                      </SelectItem>
-                    </SelectGroup>
-                  ))}
+                  {solarConfig.map((config: SolarConfig, index: number) => {
+
+
+
+                    if(config.panelsCount > maxPanels) {
+                      return null;
+                    }
+
+                    return (
+                      <SelectGroup key={config.panelsCount}>
+                        <SelectItem value={index.toString()}>
+                          <SelectLabel>{config.panelsCount} Panels</SelectLabel>
+                        </SelectItem>
+                      </SelectGroup>
+                    );
+                  })}
                 </SelectContent>
               </Select>
             </div>

@@ -13,7 +13,7 @@ const SolarData = async ({
 	const solarData = await getSolarData(latitude, longitude);
 
   // get the solar panel rating from the solar data api;
-  console.log(solarData.solarPotential.panelCapacityWatts);
+  console.log(solarData);
 
 
 
@@ -26,6 +26,8 @@ const SolarData = async ({
           address={address}
           solarConfig={solarData.solarPotential.solarPanelConfigs}
           panelCapacityWatts={solarData.solarPotential.panelCapacityWatts}
+          maxArrayArea={solarData.solarPotential.maxArrayAreaMeters2}
+          roofStats={solarData.solarPotential.wholeRoofStats}
           maxPotentialKwh={
             solarData.solarPotential.solarPanelConfigs[
               solarData.solarPotential.solarPanelConfigs.length - 1
