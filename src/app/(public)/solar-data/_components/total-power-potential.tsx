@@ -77,11 +77,12 @@ export default function TotalPowerPotential({
   // calculate the number of KW usage per month based on the electricity bill
   const monthlyKwh = (electricityBill / averageElectricityPrice);
 
-  const dailyKwh = monthlyKwh;
+  const dailyKwh = monthlyKwh/31;
+  console.log({dailyKwh});
 
   const depthOfDischarge = 0.8;
 
-  const usableBatteryCapacity = monthlyKwh / 31 / depthOfDischarge;
+  const usableBatteryCapacity = dailyKwh / depthOfDischarge;
 
   console.log(usableBatteryCapacity);
 

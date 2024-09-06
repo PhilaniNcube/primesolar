@@ -48,6 +48,10 @@ const SolarPanelConfig = ({ solarConfig, panelCapacityWatts }: SolarPotentialDis
                 <p className="mt-2 text-lg font-semibold">
                   {formatCurrency(item.price)}
                 </p>
+                <div className="text-sm font-medium">
+                  <h4 className="text-muted-foreground">Panel Dimensions</h4>
+                  <p className="text-muted-foreground">{item.dimensions.length}cm x{item.dimensions.width}cm x{item.dimensions.thickness}cm</p>
+                </div>
               </CardContent>
             </Card>
           ))}
