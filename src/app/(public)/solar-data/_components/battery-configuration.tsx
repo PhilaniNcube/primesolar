@@ -2,12 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { cn, formatCurrency } from "@/lib/utils";
 import { useConfigStore } from "@/providers/solar-config-provider";
 import { batteries } from "@/stores/data";
 import { SolarConfig } from "@/types";
-import { Check, CheckCircle, Minus, Plus } from "lucide-react";
+import {  CheckCircle, Minus, Plus } from "lucide-react";
 
 interface SolarPotentialDisplayProps {
 

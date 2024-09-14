@@ -4,6 +4,7 @@ import TotalPowerPotential from "./total-power-potential";
 import BatteryConfig from "./battery-configuration";
 import InverterConfig from "./inverter-configuration";
 import SolarPanelConfig from "./solar-panel-configuration";
+import ClientMap from "./client-map";
 
 const SolarData = async ({
 	latitude,
@@ -13,7 +14,7 @@ const SolarData = async ({
 	const solarData = await getSolarData(latitude, longitude);
 
   // get the solar panel rating from the solar data api;
-  console.log(solarData);
+  console.log(JSON.stringify(solarData.solarPotential.roofSegmentStats, null, 2));
 
 
 
@@ -34,16 +35,19 @@ const SolarData = async ({
             ]?.yearlyEnergyDcKwh ?? 0
           }
         />{" "}
-        <GoogleMapsEmbed
-          apiKey={apiKey}
-          height={500}
-          width="100%"
-          mode="place"
-          q={address}
-          zoom="21"
-          maptype="satellite"
-          style="border-radius: 5px;"
-        />
+
+        {solarData.solarPotential.roofSegmentStats.length > 0 && (
+          <>
+            {solarData.solarPotential.roofSegmentStats[0]?.boundingBox && (
+              <ClientMap
+                boundingBox={
+                  solarData.solarPotential.roofSegmentStats[0].boundingBox
+                }
+                center={solarData.solarPotential.roofSegmentStats[0]?.center}
+              />
+            )}
+          </>
+        )}
       </div>
       <div>
         <SolarPanelConfig

@@ -11,7 +11,7 @@ const DesktopNavigation = async () => {
 
   const [ admin] = await Promise.all([ adminData]);
 
-  console.log(admin);
+
 
 
   return (

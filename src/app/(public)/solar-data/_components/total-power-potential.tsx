@@ -23,7 +23,7 @@ import { cn, formatCurrency } from "@/lib/utils";
 import { useConfigStore } from "@/providers/solar-config-provider";
 import type { SolarConfig } from "@/types";
 import { Info, Sun } from "lucide-react";
-import { type ChangeEvent, use, useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 
 interface SolarPotentialDisplayProps {
 	address: string;
@@ -117,8 +117,18 @@ export default function TotalPowerPotential({
         <div>
           <h3 className="text-sm font-medium text-muted-foreground">Address</h3>
           <p className="text-lg font-semibold">{address}</p>
-          <p className="text-lg font-semibold">Roof Area: {roofStats.areaMeters2.toFixed(2)}</p>
-          <p className="text-lg font-semibold">Max Solar Array Area: {maxArrayArea.toFixed(2)}</p>
+          <p className="text-lg font-semibold">
+            Roof Area: {roofStats.areaMeters2.toFixed(2)}
+            <span className="pl-0.5 text-xs">
+              m<sup>2</sup>
+            </span>
+          </p>
+          <p className="text-lg font-semibold">
+            Max Solar Array Area: {maxArrayArea.toFixed(2)}
+            <span className="pl-0.5 text-xs">
+              m<sup>2</sup>
+            </span>
+          </p>
         </div>
         <div>
           <h3 className="text-sm font-medium text-muted-foreground">
@@ -157,8 +167,9 @@ export default function TotalPowerPotential({
         <div
           className={cn(
             "my-2 w-fit rounded-md border-2 p-2 shadow-lg",
-            maxDailyGeneration < Number(usableBatteryCapacity.toFixed(2)) ?
-              "border-red-600 bg-red-100 text-red-600" : "text-green-800 border-green-600 bg-green-50",
+            maxDailyGeneration < Number(usableBatteryCapacity.toFixed(2))
+              ? "border-red-600 bg-red-100 text-red-600"
+              : "border-green-600 bg-green-50 text-green-800",
           )}
         >
           <h3 className="text-md font-medium">
@@ -232,10 +243,7 @@ export default function TotalPowerPotential({
                 </SelectTrigger>
                 <SelectContent>
                   {solarConfig.map((config: SolarConfig, index: number) => {
-
-
-
-                    if(config.panelsCount > maxPanels) {
+                    if (config.panelsCount > maxPanels) {
                       return null;
                     }
 

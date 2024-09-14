@@ -41,7 +41,7 @@ export default function AddressForm() {
 
 	const [state, formAction] = useFormState(searchAddressAction, null);
 
-  console.log({state});
+
 
 	return (
 		<Card className="w-full max-w-md mx-auto">
