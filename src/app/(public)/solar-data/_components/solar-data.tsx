@@ -1,5 +1,4 @@
 import getSolarData from "@/utils/queries/solar-data";
-import { GoogleMapsEmbed } from "@next/third-parties/google";
 import TotalPowerPotential from "./total-power-potential";
 import BatteryConfig from "./battery-configuration";
 import InverterConfig from "./inverter-configuration";
@@ -15,10 +14,6 @@ const SolarData = async ({
 
   // get the solar panel rating from the solar data api;
   console.log(JSON.stringify(solarData.solarPotential.roofSegmentStats, null, 2));
-
-
-
-	const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY ?? "";
 
 	return (
     <div className="container py-4">
