@@ -8,8 +8,12 @@ import { Toaster } from "sonner";
 export const metadata: Metadata = {
   title: "Prime Solar",
   description:
-    "Get the up to date inormation on solar nergy products, trends and services.",
+    "Get the up to date information on solar nergy products, trends and services.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  keywords: ["solar", "energy", "renewable", "power", "electricity"],
+  verification: {
+    google: "MBVeZ9Tt4smHxsJKEh7w0J5eAWqCG7kw2lqxNYkB-qM",
+  },
 };
 
 export default function RootLayout({

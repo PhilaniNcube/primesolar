@@ -30,19 +30,13 @@ const SolarData = async ({
             ]?.yearlyEnergyDcKwh ?? 0
           }
         />{" "}
-
         {solarData.solarPotential.roofSegmentStats.length > 0 && (
-          <>
-            {solarData.solarPotential.roofSegmentStats[0]?.boundingBox && (
+            <>
               <ClientMap
-                boundingBox={
-                  solarData.solarPotential.roofSegmentStats[0].boundingBox
-                }
-                center={solarData.solarPotential.roofSegmentStats[0]?.center}
+               roofSegmentStats={solarData.solarPotential.roofSegmentStats}
               />
-            )}
-          </>
-        )}
+            </>
+          )}
       </div>
       <div>
         <SolarPanelConfig
