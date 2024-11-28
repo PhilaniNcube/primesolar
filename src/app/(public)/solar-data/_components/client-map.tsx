@@ -13,13 +13,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Compass, Sun, Ruler, MapPin, Square } from "lucide-react";
+import { Compass, Ruler, MapPin  } from "lucide-react";
 
 
 
 const containerStyle = {
   width: "100%",
-  height: "100%",
+  height: "450px",
 };
 
 
