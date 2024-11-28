@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import SolarData from "./_components/solar-data";
 import LoadingSolarComponent from "./_components/loading-component";
+import ContactForm from "@/components/contact-form";
 
 const SolarDataPage = async ({
 	searchParams,
@@ -28,6 +29,7 @@ const SolarDataPage = async ({
 					address={address}
 				/>
 			</Suspense>
+      <ContactForm />
 		</div>
 	);
 };
