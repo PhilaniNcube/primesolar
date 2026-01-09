@@ -1,39 +1,36 @@
-# Primesolar
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# Description
-An application which will be a site to show useful information on solar energy for home and business solar. It will also include information on diffrent configurations of solar systems, including estimated upfront costs and repayment periods
+## Getting Started
 
-## TODO
+First, run the development server:
 
-- [*] Set up database (Supabase or Vercel Postgress)
-- [] Set up CMS (Basehub or Payload CMS)
-- [] Set up clerk (Only if not using supabase since they have authentication built in)
-- [*] Install Shadcn
-- [] Set up Resend for sending emails
-- [] Obtain information on solar products to be included in the database
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## FEATURES
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-  ### Product Catalog:
-    -> Detailed product listings (panels, inverters, batteries, etc.) with specifications, images, pricing, and warranty information.
-    -> Filtering and sorting options (by brand, wattage, price, etc.).
-    -> Side-by-side product comparison tool.
+## Learn More
 
-  ### Solar Estimate Tool
-    -> Address Input Field (Google Autocomplete)
-    -> For covered areas integration with the Google Solar API
-    -> Clear and intuitive visualization of solar estimates (charts, graphs, maps).
+To learn more about Next.js, take a look at the following resources:
 
-  ### Lead Generation
-    -> Forms to capture user information (with consent) for connecting with solar installers.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-  ### Educational Content
-    -> Blog/resource section with articles, videos, or infographics about solar energy.
-    -> FAQs about solar technology installations.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-  ### Installer Directory
-    -> Allow installers to apply to e included in a directory
+## Deploy on Vercel
 
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
