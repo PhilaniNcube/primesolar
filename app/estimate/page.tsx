@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useQueryStates, parseAsString } from "nuqs"
 import { MapPin, Loader2 } from "lucide-react"
 
@@ -9,7 +9,7 @@ interface Coordinates {
   lng: number
 }
 
-export default function EstimatePage() {
+function EstimateContent() {
   const [params] = useQueryStates({
     place_id: parseAsString,
     address: parseAsString,
@@ -136,6 +136,20 @@ export default function EstimatePage() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function EstimatePage() {
+  return (
+    <Suspense fallback={
+      <div className="container mx-auto px-4 py-16 max-w-4xl">
+        <div className="flex items-center justify-center min-h-100">
+          <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+        </div>
+      </div>
+    }>
+      <EstimateContent />
+    </Suspense>
   )
 }
 
