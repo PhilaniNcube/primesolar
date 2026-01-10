@@ -15,7 +15,7 @@ export function CTASection() {
           Get your free personalised solar estimate in under 2 minutes. No obligation, no pressure—just honest numbers.
         </p>
 
-  <AddressInput />
+        <AddressInput />
       </div>
     </section>
   )
