@@ -1,12 +1,9 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { MapPin, ArrowRight } from "lucide-react"
+import { AddressInput } from "./address-input"
 
 export function CTASection() {
-  const [address, setAddress] = useState("")
+ 
 
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-card/50">
@@ -18,24 +15,7 @@ export function CTASection() {
           Get your free personalised solar estimate in under 2 minutes. No obligation, no pressure—just honest numbers.
         </p>
 
-        <div className="max-w-xl mx-auto">
-          <div className="flex flex-col sm:flex-row gap-3 p-2 rounded-2xl bg-background border border-border">
-            <div className="flex-1 relative">
-              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Enter your address..."
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="pl-12 h-14 bg-secondary border-0 text-foreground placeholder:text-muted-foreground text-base"
-              />
-            </div>
-            <Button className="h-14 px-8 bg-primary text-primary-foreground hover:bg-primary/90 text-base font-semibold">
-              Get My Estimate
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-          </div>
-        </div>
+  <AddressInput />
       </div>
     </section>
   )
