@@ -1,12 +1,35 @@
 import { Suspense } from "react"
 import { SolarConfigurator } from "@/components/solar-configurator"
 import { Skeleton } from "@/components/ui/skeleton"
+import type { Metadata } from "next"
 
 interface EstimatePageProps {
   searchParams: Promise<{
     place_id?: string
     address?: string
   }>
+}
+
+export async function generateMetadata({ searchParams }: EstimatePageProps): Promise<Metadata> {
+  const params = await searchParams
+  const address = params.address ? decodeURIComponent(params.address) : ""
+  
+  return {
+    title: address ? `Solar Estimate for ${address}` : 'Get Your Solar Estimate',
+    description: `Customize your solar panel system for ${address || 'your location'}. Configure panels, batteries, and BMS to calculate costs, savings, and environmental impact.`,
+    openGraph: {
+      title: address ? `Solar Estimate for ${address}` : 'Get Your Solar Estimate',
+      description: `Customize your solar panel system and calculate your savings with PrimeSolar.`,
+      url: 'https://primesolar.co.za/estimate',
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    alternates: {
+      canonical: 'https://primesolar.co.za/estimate',
+    },
+  }
 }
 
 export default async function EstimatePage({ searchParams }: EstimatePageProps) {
