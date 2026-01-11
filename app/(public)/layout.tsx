@@ -4,6 +4,7 @@ import "../globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Toaster } from "@/components/ui/sonner";
 
 const notoSans = Noto_Sans({variable:'--font-sans'});
 
@@ -91,6 +92,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+           <Toaster />
         </NuqsAdapter>
       </body>
     </html>
