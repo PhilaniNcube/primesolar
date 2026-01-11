@@ -5,8 +5,8 @@ export function SolarPanelsTableSkeleton() {
   return (
     <Card>
       <CardHeader>
-        <Skeleton className="h-6 w-[200px]" />
-        <Skeleton className="h-4 w-[300px] mt-2" />
+        <Skeleton className="h-6 w-50" />
+        <Skeleton className="h-4 w-75 mt-2" />
       </CardHeader>
       <CardContent>
         <div className="mb-4">

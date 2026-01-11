@@ -11,6 +11,7 @@ import {
   type ColumnFiltersState,
 } from "@tanstack/react-table";
 import { useState } from "react";
+import Link from "next/link";
 import { Pencil, Trash2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,7 +30,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { useQueryState } from "nuqs";
 
 type SolarPanel = {
@@ -55,7 +55,7 @@ const formatCurrency = (amount: number) => {
     style: "currency",
     currency: "ZAR",
     minimumFractionDigits: 0,
-  }).format(amount); 
+  }).format(amount);
 };
 
 const handleDeletePanel = (id: string) => {
@@ -111,9 +111,11 @@ export function SolarPanelsTable({ panels }: SolarPanelsTableProps) {
         const panel = row.original;
         return (
           <div className="flex justify-end gap-2">
-            <Button variant="ghost" size="icon">
-              <Pencil className="size-4" />
-            </Button>
+            <Link href={`/admin/solar-panels/${panel.id}`}>
+              <Button variant="ghost" size="icon">
+                <Pencil className="size-4" />
+              </Button>
+            </Link>
             <Button
               variant="ghost"
               size="icon"
@@ -127,6 +129,7 @@ export function SolarPanelsTable({ panels }: SolarPanelsTableProps) {
     },
   ];
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data: panels,
     columns,
