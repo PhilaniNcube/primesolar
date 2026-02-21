@@ -3,7 +3,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { formatCurrency } from "@/lib/currency"
-import { Zap, Battery, Cpu, Wrench } from "lucide-react"
+import { Zap, Battery, Cpu, Wrench, Leaf } from "lucide-react"
+import { QuoteRequestDialog } from "@/components/quote-request-dialog"
+import type { QuoteRequestInput } from "@/dal/mutations/types"
 
 interface CostBreakdownProps {
   panelCost: number
@@ -14,6 +16,7 @@ interface CostBreakdownProps {
   systemSizeKw: number
   totalBatteryCapacity: number
   yearlyEnergyKwh: number
+  configData?: Omit<QuoteRequestInput, "firstName" | "lastName" | "email" | "phone">
 }
 
 export function CostBreakdown({
@@ -25,6 +28,7 @@ export function CostBreakdown({
   systemSizeKw,
   totalBatteryCapacity,
   yearlyEnergyKwh,
+  configData,
 }: CostBreakdownProps) {
   return (
     <Card className="sticky top-24">
@@ -104,7 +108,27 @@ export function CostBreakdown({
         <p className="text-xs text-muted-foreground text-center">
           *Prices are estimates and may vary based on site assessment
         </p>
+        {/* CTA */}
+              <Card className="border-primary bg-primary/5">
+          <CardContent className="pt-6">
+            <h3 className="text-lg font-semibold text-foreground">Ready to go solar?</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Get a detailed quote from our certified installers in your area.
+            </p>
+            {configData ? (
+              <QuoteRequestDialog configData={configData} />
+            ) : (
+              <p className="mt-4 text-center text-sm text-muted-foreground">
+                Complete your configuration to request a quote.
+              </p>
+            )}
+            <p className="mt-3 text-center text-xs text-muted-foreground">No obligation • Free consultation</p>
+          </CardContent>
+        </Card>
+        
       </CardContent>
+      
     </Card>
+    
   )
 }

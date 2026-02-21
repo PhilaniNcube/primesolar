@@ -176,3 +176,25 @@ export const deleteSchema = z.object({
 
 export type CreateLeadInput = z.infer<typeof createLeadSchema>;
 export type UpdateLeadInput = z.infer<typeof updateLeadSchema>;
+
+// Quote request schema & type
+export const quoteRequestSchema = z.object({
+  // Lead info
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().optional().or(z.literal("")),
+  // Configuration info
+  address: z.string().min(1, "Address is required"),
+  latitude: z.number().min(-90).max(90),
+  longitude: z.number().min(-180).max(180),
+  googleSolarData: z.unknown().optional(),
+  // Selected items
+  panelId: z.string().min(1, "Panel selection is required"),
+  panelQuantity: z.number().int().positive(),
+  batteryId: z.string().min(1, "Battery selection is required"),
+  batteryQuantity: z.number().int().positive(),
+  inverterId: z.string().min(1, "Inverter selection is required"),
+});
+
+export type QuoteRequestInput = z.infer<typeof quoteRequestSchema>;

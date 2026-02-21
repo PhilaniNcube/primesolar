@@ -492,47 +492,24 @@ export function SolarConfigurator({
           systemSizeKw={systemSizeKw}
           totalBatteryCapacity={totalBatteryCapacity}
           yearlyEnergyKwh={yearlyEnergyKwh}
+          configData={{
+            address,
+            latitude: solarData?.center?.latitude ?? 0,
+            longitude: solarData?.center?.longitude ?? 0,
+            googleSolarData: solarData ?? undefined,
+            panelId: selectedPanel?.id ?? "",
+            panelQuantity: panelCount,
+            batteryId: selectedBattery?.id ?? "",
+            batteryQuantity: batteryCount,
+            inverterId: selectedInverter?.id ?? "",
+          }}
         />
 
         {/* Environmental Impact */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <Leaf className="h-5 w-5 text-green-500" />
-              Environmental Impact
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">CO₂ Offset Per Year</span>
-              <span className="font-medium text-foreground">{(yearlyCarbonOffsetKg / 1000).toFixed(1)} tonnes</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">25-Year Offset</span>
-              <span className="font-medium text-foreground">
-                {((yearlyCarbonOffsetKg * 25) / 1000).toFixed(0)} tonnes
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">Trees Equivalent</span>
-              <span className="font-medium text-foreground">{Math.round(yearlyCarbonOffsetKg / 21)} trees/year</span>
-            </div>
-          </CardContent>
-        </Card>
+       
 
         {/* CTA */}
-        <Card className="border-primary bg-primary/5">
-          <CardContent className="pt-6">
-            <h3 className="text-lg font-semibold text-foreground">Ready to go solar?</h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Get a detailed quote from our certified installers in your area.
-            </p>
-            <Button className="mt-4 w-full" size="lg">
-              Request Detailed Quote
-            </Button>
-            <p className="mt-3 text-center text-xs text-muted-foreground">No obligation • Free consultation</p>
-          </CardContent>
-        </Card>
+  
       </div>
     </div>
   )

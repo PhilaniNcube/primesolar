@@ -9,3 +9,4 @@ export * from "./inverters";
 export * from "./configurations";
 export * from "./configuration-items";
 export * from "./leads";
+export * from "./quote-request";
