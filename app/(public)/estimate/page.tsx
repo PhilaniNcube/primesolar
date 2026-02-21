@@ -2,6 +2,9 @@ import { Suspense } from "react"
 import { SolarConfigurator } from "@/components/solar-configurator"
 import { Skeleton } from "@/components/ui/skeleton"
 import type { Metadata } from "next"
+import { getSolarPanels } from "@/dal/queries/solar-panels"
+import { getBatteries } from "@/dal/queries/batteries"
+import { getInverters } from "@/dal/queries/inverters"
 
 interface EstimatePageProps {
   searchParams: Promise<{
@@ -37,6 +40,12 @@ export default async function EstimatePage({ searchParams }: EstimatePageProps) 
   const placeId = params.place_id || ""
   const address = params.address ? decodeURIComponent(params.address) : ""
 
+  const [dbPanels, dbBatteries, dbInverters] = await Promise.all([
+    getSolarPanels(),
+    getBatteries(),
+    getInverters(),
+  ])
+
   return (
     <main className="min-h-screen bg-background">
    
@@ -51,7 +60,13 @@ export default async function EstimatePage({ searchParams }: EstimatePageProps) 
         </div>
 
         <Suspense fallback={<ConfiguratorSkeleton />}>
-          <SolarConfigurator placeId={placeId} address={address} />
+          <SolarConfigurator
+            placeId={placeId}
+            address={address}
+            dbPanels={dbPanels}
+            dbBatteries={dbBatteries}
+            dbInverters={dbInverters}
+          />
         </Suspense>
       </div>
   

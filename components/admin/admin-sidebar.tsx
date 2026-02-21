@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Sun, Battery, Users, Settings, LogOut } from "lucide-react"
+import { LayoutDashboard, Sun, Battery, Zap, Users, Settings, LogOut } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -32,6 +32,11 @@ const navItems = [
     title: "Batteries",
     href: "/admin/batteries",
     icon: Battery,
+  },
+  {
+    title: "Inverters",
+    href: "/admin/inverters",
+    icon: Zap,
   },
   {
     title: "Leads",

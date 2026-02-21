@@ -1,6 +1,11 @@
-import { BatteriesClient } from "@/components/admin/batteries-client";
-
+import BatteriesWrapper from "@/components/admin/batteries-wrapper";
+import { BatteriesTableSkeleton } from "@/components/admin/batteries-table-skeleton";
+import { Suspense } from "react";
 
 export default function BatteriesPage() {
-  return <BatteriesClient />
+  return (
+    <Suspense fallback={<BatteriesTableSkeleton />}>
+      <BatteriesWrapper />
+    </Suspense>
+  );
 }

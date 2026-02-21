@@ -6,9 +6,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Sun, MapPin, Maximize, Clock, AlertCircle } from "lucide-react"
 import { Skeleton } from "./ui/skeleton"
+import type { BuildingInsightsResponse } from "@/lib/types/solar"
 
 interface SolarDataDisplayProps {
-  solarData: any
+  solarData: BuildingInsightsResponse | undefined
   isLoading: boolean
   error: any
   address: string
@@ -42,16 +43,16 @@ export function SolarDataDisplay({ solarData, isLoading, error, address }: Solar
         <CardHeader>
           <div className="flex items-center gap-2">
             <AlertCircle className="h-5 w-5 text-destructive" />
-            <CardTitle>Unable to Fetch Solar Data</CardTitle>
+            <CardTitle>No Solar Data for This Address</CardTitle>
           </div>
           <CardDescription>
-            We couldn&apos;t retrieve solar data for this location. Using estimated values instead.
+            We don&apos;t have solar data for this address. Google Solar API does not have imagery coverage for this
+            location.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            This may be because the Google Solar API doesn&apos;t have imagery for this area yet, or the location is outside
-            the coverage area.
+            Try searching for a nearby address, or contact us for a manual assessment.
           </p>
         </CardContent>
       </Card>
