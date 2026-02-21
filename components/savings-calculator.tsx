@@ -19,7 +19,17 @@ const ANNUAL_RATE_INCREASE = 0.12 // 12% annual increase (Eskom trend)
 
 export function SavingsCalculator({ yearlyEnergyKwh, systemCost }: SavingsCalculatorProps) {
   const [monthlyUsageKwh, setMonthlyUsageKwh] = useState(800)
-  const [currentMonthlyBill, setCurrentMonthlyBill] = useState(2500)
+  const [currentMonthlyBill, setCurrentMonthlyBill] = useState(800 * ESKOM_RATE_PER_KWH)
+
+  const handleUsageChange = (value: number) => {
+    setMonthlyUsageKwh(value)
+    setCurrentMonthlyBill(parseFloat((value * ESKOM_RATE_PER_KWH).toFixed(2)))
+  }
+
+  const handleBillChange = (value: number) => {
+    setCurrentMonthlyBill(value)
+    setMonthlyUsageKwh(parseFloat((value / ESKOM_RATE_PER_KWH).toFixed(1)))
+  }
 
   const yearlyUsageKwh = monthlyUsageKwh * 12
   const currentYearlySpend = currentMonthlyBill * 12
@@ -80,7 +90,7 @@ export function SavingsCalculator({ yearlyEnergyKwh, systemCost }: SavingsCalcul
             <div className="flex items-center gap-4">
               <Slider
                 value={[monthlyUsageKwh]}
-                onValueChange={(value) => setMonthlyUsageKwh(Array.isArray(value) ? value[0] : value)}
+                onValueChange={(value) => handleUsageChange(Array.isArray(value) ? value[0] : value)}
                 min={200}
                 max={2000}
                 step={50}
@@ -90,31 +100,32 @@ export function SavingsCalculator({ yearlyEnergyKwh, systemCost }: SavingsCalcul
                 id="monthly-usage"
                 type="number"
                 value={monthlyUsageKwh}
-                onChange={(e) => setMonthlyUsageKwh(Number(e.target.value))}
+                onChange={(e) => handleUsageChange(Number(e.target.value))}
                 className="w-24"
               />
             </div>
           </div>
 
           <div className="space-y-3">
-            <Label htmlFor="monthly-bill">Current Monthly Bill (R)</Label>
+            <Label htmlFor="monthly-bill">Estimated Monthly Bill (R)</Label>
             <div className="flex items-center gap-4">
               <Slider
                 value={[currentMonthlyBill]}
-                onValueChange={(value) => setCurrentMonthlyBill(Array.isArray(value) ? value[0] : value)}
-                min={500}
-                max={10000}
-                step={100}
+                onValueChange={(value) => handleBillChange(Array.isArray(value) ? value[0] : value)}
+                min={200 * ESKOM_RATE_PER_KWH}
+                max={2000 * ESKOM_RATE_PER_KWH}
+                step={ESKOM_RATE_PER_KWH * 50}
                 className="flex-1"
               />
               <Input
                 id="monthly-bill"
                 type="number"
                 value={currentMonthlyBill}
-                onChange={(e) => setCurrentMonthlyBill(Number(e.target.value))}
+                onChange={(e) => handleBillChange(Number(e.target.value))}
                 className="w-24"
               />
             </div>
+            <p className="text-xs text-muted-foreground">Based on R{ESKOM_RATE_PER_KWH}/kWh average Eskom rate</p>
           </div>
         </div>
 

@@ -56,7 +56,7 @@ export function AddressInput() {
             selectProps={{
               value: selectedPlace,
               onChange: setSelectedPlace,
-              placeholder: "Enter your address in South Africa...",
+              placeholder: "Enter your address...",
               isClearable: true,
               className: "google-places-autocomplete bg-white",
               classNamePrefix: "google-places",
@@ -64,10 +64,10 @@ export function AddressInput() {
                 control: (provided) => ({
                   ...provided,
                   height: "56px",
-                  paddingLeft: "40px",
+                  paddingLeft: "30px",
                   backgroundColor: "hsl(var(--secondary))",
                   border: "none",
-                  borderRadius: "0.5rem",
+                  borderRadius: "0rem",
                   fontSize: "16px",
                   boxShadow: "none",
                   "&:hover": {
@@ -89,8 +89,9 @@ export function AddressInput() {
                 menu: (provided) => ({
                   ...provided,
                   backgroundColor: "#ffffff",
+                  width: "100%",
                   border: "1px solid hsl(var(--border))",
-                  borderRadius: "0.5rem",
+                  borderRadius: "0rem",
                   boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
                   marginTop: "8px",
                   zIndex: 9999,
