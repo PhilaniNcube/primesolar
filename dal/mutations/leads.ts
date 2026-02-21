@@ -3,6 +3,7 @@
 import { db } from "@/db";
 import { leads } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { revalidateTag } from "next/cache";
 import type { ServerActionResult } from "./types";
 import {
   createLeadSchema,
@@ -79,6 +80,9 @@ export async function updateLead(
       };
     }
 
+    revalidateTag(`lead-${id}`, 'max')
+    revalidateTag("leads", 'max')
+
     return {
       success: true,
       data: lead,
@@ -109,6 +113,9 @@ export async function deleteLead(
     const { id } = deleteSchema.parse(rawData);
 
     await db.delete(leads).where(eq(leads.id, id));
+
+    revalidateTag(`lead-${id}`, 'max')
+    revalidateTag("leads", 'max')
 
     return {
       success: true,
@@ -151,6 +158,9 @@ export async function updateLeadStatus(
         error: "Lead not found",
       };
     }
+
+    revalidateTag(`lead-${lead.id}`, 'max')
+    revalidateTag("leads", 'max')
 
     return {
       success: true,

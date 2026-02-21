@@ -5,12 +5,27 @@ import type { Metadata } from "next"
 import { getSolarPanels } from "@/dal/queries/solar-panels"
 import { getBatteries } from "@/dal/queries/batteries"
 import { getInverters } from "@/dal/queries/inverters"
+import { cacheLife } from "next/cache"
 
 interface EstimatePageProps {
   searchParams: Promise<{
     place_id?: string
     address?: string
   }>
+}
+
+// Cached catalog fetch — runs once and is reused across all requests.
+// Separated from the page so it doesn't share scope with the runtime
+// `searchParams` access (required by the Cache Components rules).
+async function getCatalogData() {
+  "use cache"
+  cacheLife("days")
+  const [dbPanels, dbBatteries, dbInverters] = await Promise.all([
+    getSolarPanels(),
+    getBatteries(),
+    getInverters(),
+  ])
+  return { dbPanels, dbBatteries, dbInverters }
 }
 
 export async function generateMetadata({ searchParams }: EstimatePageProps): Promise<Metadata> {
@@ -35,42 +50,44 @@ export async function generateMetadata({ searchParams }: EstimatePageProps): Pro
   }
 }
 
-export default async function EstimatePage({ searchParams }: EstimatePageProps) {
+export default function EstimatePage({ searchParams }: EstimatePageProps) {
+  return (
+    <main className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-8 pt-24">
+        <Suspense fallback={<ConfiguratorSkeleton />}>
+          <EstimateContent searchParams={searchParams} />
+        </Suspense>
+      </div>
+    </main>
+  )
+}
+
+async function EstimateContent({ searchParams }: { searchParams: EstimatePageProps["searchParams"] }) {
   const params = await searchParams
   const placeId = params.place_id || ""
   const address = params.address ? decodeURIComponent(params.address) : ""
 
-  const [dbPanels, dbBatteries, dbInverters] = await Promise.all([
-    getSolarPanels(),
-    getBatteries(),
-    getInverters(),
-  ])
+  const { dbPanels, dbBatteries, dbInverters } = await getCatalogData()
 
   return (
-    <main className="min-h-screen bg-background">
-   
-      <div className="container mx-auto px-4 py-8 pt-24">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground md:text-4xl">Your Solar Estimate</h1>
-          {address && (
-            <p className="mt-2 text-muted-foreground">
-              Analyzing solar potential for: <span className="text-foreground font-medium">{address}</span>
-            </p>
-          )}
-        </div>
-
-        <Suspense fallback={<ConfiguratorSkeleton />}>
-          <SolarConfigurator
-            placeId={placeId}
-            address={address}
-            dbPanels={dbPanels}
-            dbBatteries={dbBatteries}
-            dbInverters={dbInverters}
-          />
-        </Suspense>
+    <>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-foreground md:text-4xl">Your Solar Estimate</h1>
+        {address && (
+          <p className="mt-2 text-muted-foreground">
+            Analyzing solar potential for: <span className="text-foreground font-medium">{address}</span>
+          </p>
+        )}
       </div>
-  
-    </main>
+
+      <SolarConfigurator
+        placeId={placeId}
+        address={address}
+        dbPanels={dbPanels}
+        dbBatteries={dbBatteries}
+        dbInverters={dbInverters}
+      />
+    </>
   )
 }
 
