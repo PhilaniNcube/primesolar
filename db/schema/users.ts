@@ -1,19 +1,6 @@
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+// Users table is now managed by Better Auth.
+// See ./auth-schema.ts for the user, session, account, and verification tables.
+//
+// Re-export for convenience so existing imports from "./users" still resolve.
+export { user, session, account, verification } from "./auth-schema";
 
-// Example users table - customize based on your needs
-export const users = sqliteTable("users", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  name: text("name").notNull(),
-  email: text("email").notNull().unique(),
-  createdAt: integer("created_at", { mode: "timestamp" })
-    .$defaultFn(() => new Date())
-    .notNull(),
-  updatedAt: integer("updated_at", { mode: "timestamp" })
-    .$defaultFn(() => new Date())
-    .$onUpdateFn(() => new Date())
-    .notNull(),
-});
-
-// Add more tables here as needed

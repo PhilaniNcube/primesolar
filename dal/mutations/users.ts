@@ -1,13 +1,17 @@
 "use server";
 
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { user } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import type { ServerActionResult } from "./types";
 import { createUserSchema, updateUserSchema, deleteSchema } from "./types";
 
 /**
  * Create a new user
+ *
+ * NOTE: For authentication-related user creation, prefer
+ * `auth.api.signUpEmail` or `authClient.signUp.email` instead.
+ * This function performs a raw DB insert.
  */
 export async function createUser(
   prevState: unknown,
@@ -17,11 +21,11 @@ export async function createUser(
     const rawData = Object.fromEntries(formData.entries());
     const validatedData = createUserSchema.parse(rawData);
 
-    const [user] = await db.insert(users).values(validatedData).returning();
+    const [newUser] = await db.insert(user).values(validatedData).returning();
     
     return {
       success: true,
-      data: user,
+      data: newUser,
     };
   } catch (error) {
     if (error instanceof Error) {
@@ -49,13 +53,13 @@ export async function updateUser(
     const validatedData = updateUserSchema.parse(rawData);
     const { id, ...updateData } = validatedData;
 
-    const [user] = await db
-      .update(users)
+    const [updatedUser] = await db
+      .update(user)
       .set({ ...updateData, updatedAt: new Date() })
-      .where(eq(users.id, id))
+      .where(eq(user.id, id))
       .returning();
 
-    if (!user) {
+    if (!updatedUser) {
       return {
         success: false,
         error: "User not found",
@@ -64,7 +68,7 @@ export async function updateUser(
 
     return {
       success: true,
-      data: user,
+      data: updatedUser,
     };
   } catch (error) {
     if (error instanceof Error) {
@@ -91,7 +95,7 @@ export async function deleteUser(
     const rawData = Object.fromEntries(formData.entries());
     const { id } = deleteSchema.parse(rawData);
 
-    await db.delete(users).where(eq(users.id, id));
+    await db.delete(user).where(eq(user.id, id));
 
     return {
       success: true,
