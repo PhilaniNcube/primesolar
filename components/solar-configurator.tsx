@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useMemo } from "react"
 import useSWR from "swr"
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -114,16 +114,15 @@ export function SolarConfigurator({
     return Math.max(4, Math.floor(apiMaxPanels * (apiPanelAreaM2 / actualPanelAreaM2)))
   }, [solarData, apiMaxPanels, apiPanelAreaM2, actualPanelAreaM2])
 
-  // Initialise panel count based on adjusted maximum when solar data loads
-  useEffect(() => {
+  // Adjust panel count when adjustedMaxPanels changes (render-time adjustment
+  // instead of an effect to avoid cascading renders – see React docs
+  // "Adjusting some state when a prop changes").
+  const [prevAdjustedMax, setPrevAdjustedMax] = useState<number | null>(null)
+  if (adjustedMaxPanels !== prevAdjustedMax) {
+    setPrevAdjustedMax(adjustedMaxPanels)
     const recommended = Math.min(Math.ceil(adjustedMaxPanels * 0.5), 20)
     setPanelCount(Math.max(4, recommended))
-  }, [adjustedMaxPanels])
-
-  // Clamp panel count whenever the selected panel changes and the max shifts
-  useEffect(() => {
-    setPanelCount((prev) => Math.min(prev, adjustedMaxPanels))
-  }, [adjustedMaxPanels])
+  }
 
   // -------------------------------------------------------------------------
   // Wattage-corrected yearly energy production

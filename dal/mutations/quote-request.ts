@@ -1,11 +1,14 @@
 "use server";
 
+import { createElement } from "react";
 import { db } from "@/db";
 import { configurations, configurationItems, leads } from "@/db/schema";
 import type { ServerActionResult } from "./types";
 import { quoteRequestSchema } from "./types";
 import type { QuoteRequestInput } from "./types";
 import { z } from "zod";
+import { sendReactEmail, ADMIN_EMAIL } from "@/lib/email";
+import { NewLeadEmail } from "@/emails/new-lead";
 
 /**
  * Submit a quote request: creates a configuration with items and a lead in one go.
@@ -61,6 +64,22 @@ export async function submitQuoteRequest(
         status: "new",
       })
       .returning();
+
+    // 4. Send lead notification email to admin (fire-and-forget)
+    void sendReactEmail({
+      to: ADMIN_EMAIL,
+      subject: `New Quote Request: ${lead.firstName} ${lead.lastName}`,
+      react: createElement(NewLeadEmail, {
+        firstName: lead.firstName,
+        lastName: lead.lastName,
+        email: lead.email,
+        phone: lead.phone,
+        configurationId: lead.configurationId,
+        submittedAt: lead.createdAt,
+      }),
+    }).catch((err) =>
+      console.error("[submitQuoteRequest] Failed to send notification email:", err)
+    );
 
     return {
       success: true,

@@ -32,7 +32,11 @@ export async function createLead(
       phone: validatedData.phone || null,
     };
 
+    console.log("[createLead] Inserting lead with data:", dataToInsert);
+
     const [lead] = await db.insert(leads).values(dataToInsert).returning();
+
+    console.log("[createLead] Created lead:", lead);
 
     // Send lead notification email to admin (fire-and-forget)
    const leadsEmail =  await sendReactEmail({
