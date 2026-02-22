@@ -1,5 +1,6 @@
 "use server";
 
+import { createElement } from "react";
 import { db } from "@/db";
 import { leads } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -11,6 +12,8 @@ import {
   deleteSchema,
   updateLeadStatusSchema,
 } from "./types";
+import { sendReactEmail, ADMIN_EMAIL } from "@/lib/email";
+import { NewLeadEmail } from "@/emails/new-lead";
 
 /**
  * Create a new lead
@@ -30,7 +33,21 @@ export async function createLead(
     };
 
     const [lead] = await db.insert(leads).values(dataToInsert).returning();
-    
+
+    // Send lead notification email to admin (fire-and-forget)
+    void sendReactEmail({
+      to: ADMIN_EMAIL,
+      subject: `New Lead: ${lead.firstName} ${lead.lastName}`,
+      react: createElement(NewLeadEmail, {
+        firstName: lead.firstName,
+        lastName: lead.lastName,
+        email: lead.email,
+        phone: lead.phone,
+        configurationId: lead.configurationId,
+        submittedAt: lead.createdAt,
+      }),
+    });
+
     return {
       success: true,
       data: lead,

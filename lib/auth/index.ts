@@ -2,8 +2,12 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin as adminPlugin } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js";
+import { createElement } from "react";
 import { db } from "@/db";
 import { ac, admin, user } from "./permissions";
+import { sendReactEmail } from "@/lib/email";
+import { ForgotPasswordEmail } from "@/emails/forgot-password";
+import { VerifyEmail } from "@/emails/verify-email";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -21,8 +25,30 @@ export const auth = betterAuth({
   /* ── Email & Password ──────────────────────────────────── */
   emailAndPassword: {
     enabled: true,
-    // Uncomment & implement when you're ready for password-reset emails:
-    // sendResetPassword: async ({ user, url, token }, request) => { ... },
+    sendResetPassword: async ({ user: u, url }) => {
+      void sendReactEmail({
+        to: u.email,
+        subject: "Reset your password – PrimeSolar",
+        react: createElement(ForgotPasswordEmail, {
+          name: u.name,
+          resetUrl: url,
+        }),
+      });
+    },
+  },
+
+  /* ── Email Verification ────────────────────────────────── */
+  emailVerification: {
+    sendVerificationEmail: async ({ user: u, url }) => {
+      void sendReactEmail({
+        to: u.email,
+        subject: "Verify your email – PrimeSolar",
+        react: createElement(VerifyEmail, {
+          name: u.name,
+          verifyUrl: url,
+        }),
+      });
+    },
   },
 
   /* ── Plugins ───────────────────────────────────────────── */
