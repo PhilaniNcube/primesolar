@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import "../globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
@@ -85,6 +86,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={notoSans.variable}>
+      <GoogleTagManager gtmId="GTM-PD22QM48" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
       >

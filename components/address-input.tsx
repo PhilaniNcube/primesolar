@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { MapPin, ArrowRight } from "lucide-react"
+import { sendGTMEvent } from "@next/third-parties/google"
 import GooglePlacesAutocomplete from "react-google-places-autocomplete"
 import type { SingleValue } from "react-select"
 
@@ -39,6 +40,12 @@ export function AddressInput() {
     const params = new URLSearchParams({
       place_id: selectedPlace.value.place_id,
       address: selectedPlace.value.description,
+    })
+
+    sendGTMEvent({
+      event: "get_my_estimate_click",
+      address: selectedPlace.value.description,
+      place_id: selectedPlace.value.place_id,
     })
 
     router.push(`/estimate?${params.toString()}`)

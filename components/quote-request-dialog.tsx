@@ -17,6 +17,7 @@ import { submitQuoteRequest } from "@/dal/mutations/quote-request"
 import type { QuoteRequestInput } from "@/dal/mutations/types"
 import { toast } from "sonner"
 import { Loader2, CheckCircle2 } from "lucide-react"
+import { sendGTMEvent } from "@next/third-parties/google"
 
 interface QuoteRequestDialogProps {
   /** Trigger element — defaults to a full-width button */
@@ -45,6 +46,13 @@ export function QuoteRequestDialog({ children, configData }: QuoteRequestDialogP
     startTransition(async () => {
       const result = await submitQuoteRequest(input)
       if (result.success) {
+        sendGTMEvent({
+          event: "quote_request_submitted",
+          first_name: input.firstName,
+          last_name: input.lastName,
+          email: input.email,
+          phone: input.phone,
+        })
         setSubmitted(true)
         toast.success("Quote request submitted! We'll be in touch shortly.")
       } else {
@@ -69,7 +77,7 @@ export function QuoteRequestDialog({ children, configData }: QuoteRequestDialogP
         {children ?? "Request Detailed Quote"}
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="max-w-xl mx-auto">
         {submitted ? (
           <div className="flex flex-col items-center gap-4 py-6 text-center">
             <CheckCircle2 className="h-12 w-12 text-green-500" />

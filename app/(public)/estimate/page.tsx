@@ -70,7 +70,7 @@ async function EstimateContent({ searchParams }: { searchParams: EstimatePagePro
   const { dbPanels, dbBatteries, dbInverters } = await getCatalogData()
 
   return (
-    <>
+    <div className="max-w-7xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-foreground md:text-4xl">Your Solar Estimate</h1>
         {address && (
@@ -87,7 +87,7 @@ async function EstimateContent({ searchParams }: { searchParams: EstimatePagePro
         dbBatteries={dbBatteries}
         dbInverters={dbInverters}
       />
-    </>
+    </div>
   )
 }
 
