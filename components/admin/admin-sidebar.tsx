@@ -8,7 +8,6 @@ import {
   Battery,
   Zap,
   Users,
-  Settings,
   LogOut,
 } from "lucide-react";
 import {
