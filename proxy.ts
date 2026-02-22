@@ -1,19 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
+import { auth } from "@/lib/auth";
 
 /**
  * Next.js 16 "proxy" – replaces middleware.
  *
- * Uses a lightweight cookie-existence check (no DB call) to
- * optimistically redirect unauthenticated users away from
- * protected routes.  Actual session validation happens in each
- * page / server-action via `auth.api.getSession`.
+ * Validates the session cookie and checks the user's role before
+ * allowing access to admin routes. This keeps the admin layout
+ * fully static / prerenderable.
  */
 export async function proxy(request: NextRequest) {
   const sessionCookie = getSessionCookie(request);
 
+  // No cookie at all → sign in
   if (!sessionCookie) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
+  }
+
+  // Full session validation (DB call) + role check
+  const session = await auth.api.getSession({
+    headers: request.headers,
+  });
+
+  if (!session) {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
+  }
+
+  if (session.user.role !== "admin") {
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();
