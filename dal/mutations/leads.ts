@@ -35,7 +35,7 @@ export async function createLead(
     const [lead] = await db.insert(leads).values(dataToInsert).returning();
 
     // Send lead notification email to admin (fire-and-forget)
-    await sendReactEmail({
+   const leadsEmail =  await sendReactEmail({
       to: ADMIN_EMAIL,
       subject: `New Lead: ${lead.firstName} ${lead.lastName}`,
       react: createElement(NewLeadEmail, {
@@ -47,6 +47,8 @@ export async function createLead(
         submittedAt: lead.createdAt,
       }),
     });
+
+    console.log("[createLead] Sent notification email:", leadsEmail);
 
     return {
       success: true,
