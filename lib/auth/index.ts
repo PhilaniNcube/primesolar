@@ -34,6 +34,7 @@ export const auth = betterAuth({
         user,
       },
       defaultRole: "user",
+      adminUserIds: ["QhiMXNzLuBGf8TrnQgmdA0BxTwle0Cko"],
     }),
     nextCookies(), // must be last – auto-sets cookies in server actions
   ],
