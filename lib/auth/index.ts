@@ -10,6 +10,14 @@ export const auth = betterAuth({
     provider: "sqlite",
   }),
 
+  trustedOrigins: [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://primesolar.co.za",
+    "https://www.primesolar.co.za",
+    process.env.BETTER_AUTH_URL!,
+  ],
+
   /* ── Email & Password ──────────────────────────────────── */
   emailAndPassword: {
     enabled: true,
