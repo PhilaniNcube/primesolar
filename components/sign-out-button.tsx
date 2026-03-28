@@ -12,6 +12,7 @@ export function SignOutButton({
   variant?: "ghost" | "default"
 }) {
   const router = useRouter()
+  
 
   const handleSignOut = async () => {
     await signOut()

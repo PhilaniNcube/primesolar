@@ -27,10 +27,19 @@ export async function HeaderAuth({ mobile = false }: { mobile?: boolean }) {
   if (mobile) {
     return (
       <>
-        <Button variant="ghost" className="justify-start text-muted-foreground" render={<Link href="/sign-in" />}>
+        <Button
+          variant="ghost"
+          className="justify-start text-muted-foreground"
+          nativeButton={false}
+          render={<Link href="/sign-in" />}
+        >
           Sign In
         </Button>
-        <Button className="bg-primary text-primary-foreground" render={<Link href="/sign-up" />}>
+        <Button
+          className="bg-primary text-primary-foreground"
+          nativeButton={false}
+          render={<Link href="/sign-up" />}
+        >
           Sign Up
         </Button>
       </>
@@ -39,10 +48,19 @@ export async function HeaderAuth({ mobile = false }: { mobile?: boolean }) {
 
   return (
     <>
-      <Button variant="ghost" className="text-muted-foreground hover:text-foreground" render={<Link href="/sign-in" />}>
+      <Button
+        variant="ghost"
+        className="text-muted-foreground hover:text-foreground"
+        nativeButton={false}
+        render={<Link href="/sign-in" />}
+      >
         Sign In
       </Button>
-      <Button className="bg-primary text-primary-foreground hover:bg-primary/90" render={<Link href="/sign-up" />}>
+      <Button
+        className="bg-primary text-primary-foreground hover:bg-primary/90"
+        nativeButton={false}
+        render={<Link href="/sign-up" />}
+      >
         Sign Up
       </Button>
     </>
